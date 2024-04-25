@@ -1,0 +1,32 @@
+{
+    "fast default boilerplate" : {
+        "prefix": "ginit",
+        "body": [
+            "package main\n",
+            "import \"fmt\" \n",
+            "func main() {\n",
+            "}"
+          ]
+    },
+    "Region": {
+        "prefix": "reg",
+        "scope": "go",
+        "body": [
+          "//#region  //*=========== ${1} ===========",
+          "${TM_SELECTED_TEXT}$0",
+          "//#endregion  //*======== ${1} ==========="
+        ]
+    },
+    "Basic Printing" : {
+        "prefix": "pr",
+        "body": [
+            "fmt.Println(${1: \"Hello World\"})"
+        ]
+    },
+    "Basic Scanning" : {
+        "prefix": "sc",
+        "body": [
+            "fmt.Scan(%n)",
+        ]
+    }
+}
