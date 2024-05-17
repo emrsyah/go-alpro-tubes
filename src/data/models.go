@@ -5,6 +5,9 @@ type Account struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
 	IsAdmin  bool   `json:"is_admin"`
+	// IsVerified bisa pending, success, rejected
+	IsVerified bool   `json:"is_verified"`
+	Role       string `json:"role"`
 }
 
 type Store struct {
@@ -26,12 +29,3 @@ type Transaction struct {
 	ProductId int64 `json:"product_id"`
 	Quantity  int   `json:"quantity"`
 }
-
-const NMAX int = 100
-
-// DATA
-
-type AccountData [NMAX]Account
-type StoreData [NMAX]Store
-type ProductData [NMAX]Product
-type TransactionData [NMAX]Transaction
