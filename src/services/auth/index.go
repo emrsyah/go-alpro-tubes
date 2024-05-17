@@ -19,6 +19,8 @@ func CreateNewAccount(uname string, pw string, role string) {
 
 func LoginAccount(uname string, pw string) (bool, string) {
 	// car dan lihat role
+	for i := 0; i < len(m.accountData); i++ {
 
+	}
 	return true, "galse"
 }
