@@ -5,7 +5,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func CreateNewAccount(uname string, pw string, role string) {
+func CreateNewAccount(uname string, pw string, role string) bool {
 	var acc m.Account
 	id := uuid.New()
 	id = uuid.New()
@@ -15,12 +15,13 @@ func CreateNewAccount(uname string, pw string, role string) {
 	acc.IsAdmin = false
 	acc.IsVerified = false
 	acc.Role = role
+	return true
 }
 
-func LoginAccount(uname string, pw string) (bool, string) {
+func LoginAccount(uname string, pw string) (bool, string, int) {
 	// car dan lihat role
-	for i := 0; i < len(m.accountData); i++ {
+	for i := 0; i < len(m.AccountDataArr); i++ {
 
 	}
-	return true, "galse"
+	return true, "galse", 1
 }

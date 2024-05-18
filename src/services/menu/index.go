@@ -2,12 +2,21 @@ package services
 
 import (
 	"fmt"
-
 	// m "github.com/emrsyah/go-alpro-tubes/src/data"
-	auth "github.com/emrsyah/go-alpro-tubes/src/services/auth"
-	store "github.com/emrsyah/go-alpro-tubes/src/services/store"
 	// "github.com/google/uuid"
 )
+
+func PilihMenu(max int) int {
+	var pilihan int
+	fmt.Print("Masukkan Pilihan: ")
+	fmt.Scanln(&pilihan)
+	for pilihan < 1 && pilihan > max {
+		fmt.Println("Tak ada opsi", pilihan, "masukkan kembali pilihan anda")
+		fmt.Print("Masukkan Pilihan: ")
+		fmt.Scanln(&pilihan)
+	}
+	return pilihan
+}
 
 func MainMenu() {
 	fmt.Println("-------------------------------------")
@@ -40,7 +49,7 @@ func MenuRegistrasi() {
 	fmt.Println("-------------------------------------")
 }
 
-func MenuFormRegistrasiAkun(role string) {
+func MenuFormRegistrasiAkun() (string, string) {
 	var uname, pw string
 	fmt.Println("-------------------------------------")
 	fmt.Println("          Registrasi Akun            ")
@@ -49,20 +58,21 @@ func MenuFormRegistrasiAkun(role string) {
 	fmt.Scanln(&uname)
 	fmt.Print("Masukkan Password: ")
 	fmt.Scanln(&pw)
-	auth.CreateNewAccount(uname, pw, role)
+	return uname, pw
 }
 
-func MenuFormRegistrasiToko(usename string) {
+func MenuFormRegistrasiToko() string {
 	var name string
 	fmt.Println("-------------------------------------")
 	fmt.Println("          Registrasi Toko            ")
 	fmt.Println("-------------------------------------")
 	fmt.Print("Masukkan Nama Toko: ")
 	fmt.Scanln(&name)
-	store.CreateNewStore(name)
+	return name
+	// store.CreateNewStore(name)
 }
 
-func MenuFormLoginAkun() {
+func MenuFormLoginAkun() (string, string) {
 	var uname, pw string
 	fmt.Println("-------------------------------------")
 	fmt.Println("             Login Akun              ")
@@ -71,6 +81,7 @@ func MenuFormLoginAkun() {
 	fmt.Scanln(&uname)
 	fmt.Print("Masukkan Password: ")
 	fmt.Scanln(&pw)
-	isSuccess, role := auth.LoginAccount(uname, pw)
-	fmt.Println(isSuccess, role)
+	return uname, pw
+	// isSuccess, role := auth.LoginAccount(uname, pw)
+	// fmt.Println(isSuccess, role)
 }
