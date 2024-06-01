@@ -8,19 +8,22 @@ type ProductData [NMAX]Product
 type TransactionData [NMAX]Transaction
 
 var AccountDataArr AccountData
+var StoreDataArr StoreData
+var ProductDataArr ProductData
+var TransactionDataArr TransactionData
 
 // Define the struct type
-type adminData struct {
-	uname string
-	pw    string
-}
 
 // Create a package-level variable
-var AdminData = adminData{
-	uname: "admin1",
-	pw:    "",
+var AdminData = Account{
+	Id:         1,
+	Username:   "ADMIN1",
+	Password:   "12345678",
+	IsAdmin:    true,
+	IsVerified: "accepted",
+	Role:       "ADMIN",
 }
 
-func GetAdminData() adminData {
+func GetAdminData() Account {
 	return AdminData
 }

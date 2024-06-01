@@ -2,18 +2,44 @@ package services
 
 import (
 	"fmt"
+
+	d "github.com/emrsyah/go-alpro-tubes/src/data"
 	// m "github.com/emrsyah/go-alpro-tubes/src/data"
 	// "github.com/google/uuid"
 )
 
+// func PilihMenu(max int) int {
+// 	var pilihan int
+// 	fmt.Println("sebelum", pilihan)
+// 	fmt.Print("Masukkan Pilihan: ")
+// 	fmt.Scanln(&pilihan)
+// 	fmt.Println("sesudah", pilihan)
+// 	for pilihan < 1 && pilihan > max {
+// 		fmt.Println("Tak ada opsi", pilihan, "masukkan kembali pilihan anda")
+// 		fmt.Print("Masukkan Pilihan: ")
+// 		fmt.Scanln(&pilihan)
+// 	}
+// 	return pilihan
+// }
+
 func PilihMenu(max int) int {
 	var pilihan int
-	fmt.Print("Masukkan Pilihan: ")
-	fmt.Scanln(&pilihan)
-	for pilihan < 1 && pilihan > max {
-		fmt.Println("Tak ada opsi", pilihan, "masukkan kembali pilihan anda")
+	for {
 		fmt.Print("Masukkan Pilihan: ")
-		fmt.Scanln(&pilihan)
+		_, err := fmt.Scanf("%d\n", &pilihan)
+		// fmt.Print(pilihan)
+		// fmt.Print(err)
+		if err != nil {
+			// if err.Error() == "unexpected newline" {
+			// 	continue
+			// }
+			fmt.Println("Input tidak valid, masukkan angka.")
+			continue
+		}
+		if pilihan >= 1 && pilihan <= max {
+			break
+		}
+		fmt.Println("Tak ada opsi", pilihan, "masukkan kembali pilihan anda")
 	}
 	return pilihan
 }
@@ -84,4 +110,52 @@ func MenuFormLoginAkun() (string, string) {
 	return uname, pw
 	// isSuccess, role := auth.LoginAccount(uname, pw)
 	// fmt.Println(isSuccess, role)
+}
+
+func MenuMainAdminOpen(data d.AccountData, nData int) {
+	fmt.Println("-------------------------------------")
+	fmt.Println("+            Menu Admin             +")
+	fmt.Println("-------------------------------------")
+	fmt.Println("+       Data Registrasi Akun        +")
+	fmt.Println("-------------------------------------")
+	fmt.Println("+  No +  Nama                       +")
+	fmt.Println("-------------------------------------")
+
+	// Start 1 krn admin idx 0
+	for i := 1; i <= nData; i++ {
+		fmt.Printf("+%4d +  %-25s  +\n", i, data[i].Username)
+		// fmt.Println("-------------------------------------")
+	}
+	fmt.Println("-------------------------------------")
+}
+
+func MenuAdminTindakan(no int, data d.AccountData, nData int) d.AccountData {
+	fmt.Println("-------------------------------------")
+	fmt.Println("+       Tindakan Pada   Akun        +")
+	fmt.Println("-------------------------------------")
+	fmt.Printf("+ %-25s  +\n", data[no].Username)
+	fmt.Println("-------------------------------------")
+	fmt.Println("1. Setujui Akun")
+	fmt.Println("2. Tolak Akun")
+	fmt.Println("3. Kembali")
+	pilihan := PilihMenu(3)
+	switch pilihan {
+	case 1:
+		data[no].IsVerified = "accepted"
+		fmt.Println("===================================")
+		fmt.Println("Akun berhasil disetujui")
+		fmt.Println("===================================")
+		return data
+	case 2:
+		data[no].IsVerified = "rejected"
+		fmt.Println(data)
+		fmt.Println("===================================")
+		fmt.Println("Akun berhasil ditolak")
+		fmt.Println("===================================")
+		return data
+	case 3:
+		return data
+	default:
+		return data
+	}
 }

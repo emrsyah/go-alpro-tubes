@@ -6,13 +6,14 @@ type Account struct {
 	Password string `json:"password"`
 	IsAdmin  bool   `json:"is_admin"`
 	// IsVerified bisa pending, success, rejected
-	IsVerified bool   `json:"is_verified"`
+	IsVerified string `json:"is_verified"`
 	Role       string `json:"role"`
 }
 
 type Store struct {
-	Id   int64  `json:"id"`
-	Name string `json:"name"`
+	Id     int64  `json:"id"`
+	UserId int64  `json:"user_id"`
+	Name   string `json:"name"`
 }
 
 type Product struct {

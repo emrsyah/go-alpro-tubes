@@ -1,0 +1,9 @@
+24.	Aplikasi Toko Online
+Deskripsi: Aplikasi digunakan untuk pengelolaan penjualan barang secara online. Pengguna aplikasi adalah admin aplikasi, pemilik toko online, dan pembeli.
+Spesifikasi:
+a.	Pemilik toko bisa melakukan registrasi akun. 
+b.	Pembeli bisa melakukan registrasi akun.
+c.	Admin bisa melaukan persetujuan atau penolakan registrasi akun.
+d.	Pemilik toko bisa menambahkan, mengubah, dan menghapus data barang yang dijual.
+e.	Pembeli bisa melakukan pembelian barang.
+f.	Pemilik toko bisa mencetak transaksi.
