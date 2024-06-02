@@ -118,22 +118,22 @@ func MenuMainAdminOpen(data d.AccountData, nData int) {
 	fmt.Println("-------------------------------------")
 	fmt.Println("+       Data Registrasi Akun        +")
 	fmt.Println("-------------------------------------")
-	fmt.Println("+  No +  Nama                       +")
+	fmt.Println("+ No  +  Nama       +  Role         +")
 	fmt.Println("-------------------------------------")
 
 	// Start 1 krn admin idx 0
-	for i := 1; i <= nData; i++ {
-		fmt.Printf("+%4d +  %-25s  +\n", i, data[i].Username)
+	for i := 0; i < nData; i++ {
+		fmt.Printf("+%4d +  %-10s + %-12s +\n", i+1, data[i].Username, data[i].Role)
 		// fmt.Println("-------------------------------------")
 	}
 	fmt.Println("-------------------------------------")
 }
 
-func MenuAdminTindakan(no int, data d.AccountData, nData int) d.AccountData {
+func MenuAdminTindakan(no int, data d.AccountData, nData int) (int64, string) {
 	fmt.Println("-------------------------------------")
 	fmt.Println("+       Tindakan Pada   Akun        +")
 	fmt.Println("-------------------------------------")
-	fmt.Printf("+ %-25s  +\n", data[no].Username)
+	fmt.Printf("+ %-16s + %-14s +\n", data[no].Username, data[no].Role)
 	fmt.Println("-------------------------------------")
 	fmt.Println("1. Setujui Akun")
 	fmt.Println("2. Tolak Akun")
@@ -141,21 +141,21 @@ func MenuAdminTindakan(no int, data d.AccountData, nData int) d.AccountData {
 	pilihan := PilihMenu(3)
 	switch pilihan {
 	case 1:
-		data[no].IsVerified = "accepted"
+		// data[no].IsVerified = "accepted"
 		fmt.Println("===================================")
 		fmt.Println("Akun berhasil disetujui")
 		fmt.Println("===================================")
-		return data
+		return data[no].Id, "accepted"
 	case 2:
 		data[no].IsVerified = "rejected"
 		fmt.Println(data)
 		fmt.Println("===================================")
 		fmt.Println("Akun berhasil ditolak")
 		fmt.Println("===================================")
-		return data
+		return data[no].Id, "rejected"
 	case 3:
-		return data
+		return -1, "back"
 	default:
-		return data
+		return -1, "back"
 	}
 }

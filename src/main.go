@@ -47,9 +47,10 @@ func main() {
 			pilihanMain = menu.PilihMenu(3)
 
 		} else {
-			var isSuccessAccount, isSuccessStore bool
-			isSuccessAccount = false
-			isSuccessStore = false
+			// Registrasi Akun
+			isSuccessAccount := false
+			isSuccessStore := false
+			uid := "-1"
 			menu.MenuRegistrasi()
 			pilihan := menu.PilihMenu(3)
 			if pilihan == 3 {
@@ -61,9 +62,9 @@ func main() {
 			for !isSuccessAccount {
 				uname, pw := menu.MenuFormRegistrasiAkun()
 				if pilihan == 1 {
-					isSuccessAccount = auth.CreateNewAccount(uname, pw, "PEMBELI")
+					isSuccessAccount, uid = auth.CreateNewAccount(uname, pw, "PEMBELI")
 				} else {
-					isSuccessAccount = auth.CreateNewAccount(uname, pw, "PENJUAL")
+					isSuccessAccount, uid = auth.CreateNewAccount(uname, pw, "PENJUAL")
 				}
 				if isSuccessAccount {
 					fmt.Println("Berhasil menambahkan akun, tunggu verifikasi admin")
@@ -73,9 +74,11 @@ func main() {
 			}
 			for !isSuccessStore && pilihan == 2 {
 				storeName := menu.MenuFormRegistrasiToko()
-				isSuccessStore = store.CreateNewStore(storeName)
+				isSuccessStore = store.CreateNewStore(storeName, uid)
 				if isSuccessStore {
 					fmt.Println("Berhasil menambahkan toko")
+				} else {
+					fmt.Println("Gagal menambahkan toko, Coba Nama Toko Lain")
 				}
 			}
 		}
@@ -116,9 +119,14 @@ func mainAdmin() {
 			}
 			if no == -1 {
 				isOnLoop = false
+				continue
 			}
 		}
-		newData := menu.MenuAdminTindakan(no, accNotVerified, sumAccount)
-		admin.UpdateAccountData(newData)
+		if no != -1 {
+			uid, status := menu.MenuAdminTindakan(no-1, accNotVerified, sumAccount)
+			if status != "back" {
+				admin.UpdateAccountData(uid, status)
+			}
+		}
 	}
 }

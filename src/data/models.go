@@ -12,7 +12,7 @@ type Account struct {
 
 type Store struct {
 	Id     int64  `json:"id"`
-	UserId int64  `json:"user_id"`
+	UserId string `json:"user_id"`
 	Name   string `json:"name"`
 }
 

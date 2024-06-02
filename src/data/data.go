@@ -9,6 +9,7 @@ type TransactionData [NMAX]Transaction
 
 var AccountDataArr AccountData
 var StoreDataArr StoreData
+var StoreDataArrLength = 0
 var ProductDataArr ProductData
 var TransactionDataArr TransactionData
 

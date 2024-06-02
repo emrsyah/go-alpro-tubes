@@ -7,7 +7,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func CreateNewAccount(uname string, pw string, role string) bool {
+func CreateNewAccount(uname string, pw string, role string) (bool, string) {
 	var acc m.Account
 	id := uuid.New()
 	acc.Id = int64(id.ID())
@@ -19,20 +19,20 @@ func CreateNewAccount(uname string, pw string, role string) bool {
 	nData := 0
 	for i := 0; i < len(m.AccountDataArr)-1; i++ {
 		if m.AccountDataArr[i].Username == uname {
-			return false
+			return false, "-1"
 		}
 		if m.AccountDataArr[i].Username != "" && m.AccountDataArr[i].Password != "" {
 			nData++
 		}
 	}
 	m.AccountDataArr[nData] = acc
-	fmt.Println(m.AccountDataArr)
-	return true
+	// fmt.Println(m.AccountDataArr)
+	return true, id.String()
 }
 
 func LoginAccount(uname string, pw string) (bool, string, int) {
 	// car dan lihat role
-	fmt.Println(m.AccountDataArr)
+	// fmt.Println(m.AccountDataArr)
 	for i := 0; i < len(m.AccountDataArr); i++ {
 		// fmt.Println(i)
 		// fmt.Println(m.AccountDataArr[i].Username)
