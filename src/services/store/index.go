@@ -14,7 +14,7 @@ func CheckStoreAvailability(storeName string) bool {
 	return true
 }
 
-func CreateNewStore(name string, uid string) bool {
+func CreateNewStore(name string, uid int64) bool {
 	if !CheckStoreAvailability(name) {
 		return false
 	}
@@ -26,4 +26,105 @@ func CreateNewStore(name string, uid string) bool {
 	m.StoreDataArr[m.StoreDataArrLength] = store
 	m.StoreDataArrLength += 1
 	return true
+}
+
+func GetStoreData(ownerId int64) m.Store {
+	for i := 0; i < m.StoreDataArrLength; i++ {
+		if m.StoreDataArr[i].UserId == (ownerId) {
+			return m.StoreDataArr[i]
+		}
+	}
+	return m.Store{}
+}
+
+func GetItemDataByStoreId(storeId int64) (m.ProductData, int) {
+	var prodArr m.ProductData
+	nData := 0
+	for i := 0; i < m.ProductDataArrLength; i++ {
+		if m.ProductDataArr[i].StoreId == int64(storeId) {
+			prodArr[nData] = m.ProductDataArr[i]
+			nData++
+		}
+	}
+	return prodArr, nData
+}
+
+func GetTxnDataByStoreId(storeId int64) (m.TransactionData, int) {
+	var txnArr m.TransactionData
+	nData := 0
+	for i := 0; i < m.TransactionDataArrLength; i++ {
+		if m.TransactionDataArr[i].StoreId == int64(storeId) {
+			txnArr[nData] = m.TransactionDataArr[i]
+			nData++
+		}
+	}
+	return txnArr, nData
+}
+
+func DeleteItemData(itemId int64) {
+	isNemu := false
+	for i := 0; i < m.ProductDataArrLength; i++ {
+		if m.ProductDataArr[i].Id == itemId {
+			isNemu = true
+			// m.ProductDataArr[i] = m.ProductDataArr[m.ProductDataArrLength-1]
+			// m.ProductDataArrLength -= 1
+		}
+		// Mundurin semua indeks ketika udah nemu yang sama id nya, jadi barang yg dihapus ketimpa sama yang indeks selanjutnya dan seterusnya
+		if isNemu {
+			m.ProductDataArr[i] = m.ProductDataArr[i+1]
+		}
+	}
+	m.ProductDataArrLength -= 1
+}
+
+func EditItemData(itemId int64, newItem m.Product) {
+	for i := 0; i < m.ProductDataArrLength; i++ {
+		if m.ProductDataArr[i].Id == itemId {
+			m.ProductDataArr[i].Name = newItem.Name
+			m.ProductDataArr[i].Price = newItem.Price
+			m.ProductDataArr[i].Stock = newItem.Stock
+			break
+		}
+	}
+}
+
+func CreateItemData(newItem m.Product) {
+	var prod m.Product
+	id := uuid.New()
+	prod.Id = int64(id.ID())
+	prod.Name = newItem.Name
+	prod.Price = newItem.Price
+	prod.Stock = newItem.Stock
+	prod.StoreId = newItem.StoreId
+	m.ProductDataArr[m.ProductDataArrLength] = prod
+	m.ProductDataArrLength += 1
+}
+
+func SortAscendingTxnByQuantity(data *m.TransactionData, nData int) {
+	for i := 0; i < nData-1; i++ {
+		sm := data[i]
+		smIdx := i
+		for j := i + 1; j < nData; j++ {
+			if data[j].Quantity < sm.Quantity {
+				sm = data[j]
+				smIdx = j
+			}
+		}
+		tmp := data[i]
+		data[i] = data[smIdx]
+		data[smIdx] = tmp
+	}
+}
+
+func SortDescendingTxnByQuantity(data *m.TransactionData, nData int) {
+	for i := 0; i < nData-1; i++ {
+		keyIdx := i + 1
+		key := data[keyIdx]
+		j := i + 1
+		for j > 0 && data[j-1].Quantity < key.Quantity {
+			data[j] = data[j-1]
+			j--
+		}
+		data[j] = key
+	}
 }

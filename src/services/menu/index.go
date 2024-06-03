@@ -159,3 +159,103 @@ func MenuAdminTindakan(no int, data d.AccountData, nData int) (int64, string) {
 		return -1, "back"
 	}
 }
+
+func MenuMainPenjual(storeName string) int {
+	fmt.Println("-------------------------------------")
+	fmt.Println("+           Menu Penjual            +")
+	fmt.Println("-------------------------------------")
+	fmt.Printf("+ %16s + \n", storeName)
+	fmt.Println("-------------------------------------")
+	fmt.Println("1. Lihat Barang")
+	fmt.Println("2. Tambah Barang")
+	fmt.Println("3. Lihat Transaksi")
+	fmt.Println("4. Kembali")
+	pilihan := PilihMenu(4)
+	return pilihan
+}
+
+func MenuPenjualLihatBarang(data d.ProductData, nData int) int {
+	if nData == 0 {
+		fmt.Println("==============================")
+		fmt.Println("Belum ada barang yang tersedia")
+		fmt.Println("==============================")
+		return -1
+	}
+	no := 0
+
+	fmt.Println("---------------------------------------------------")
+	fmt.Println("+             Lihat Barang Toko Ini               +")
+	fmt.Println("---------------------------------------------------")
+	fmt.Println("+ No  +  Nama       +  Harga        +  Stock       +")
+	fmt.Println("---------------------------------------------------")
+	for i := 0; i < nData; i++ {
+		fmt.Printf("+%4d +  %-10s + %12d + %-12d +\n", i+1, data[i].Name, data[i].Price, data[i].Stock)
+	}
+	fmt.Println("---------------------------------------------------")
+	for (no != -1 && no > nData) || no <= 0 {
+		fmt.Print("Masukkan No data yang akan ditindak/ketik -1 untuk kembali: ")
+		fmt.Scan(&no)
+		fmt.Println()
+		if no == -1 || no > nData {
+			fmt.Println("Masukkan No data yang benar")
+		}
+	}
+	if no == -1 {
+		return -1
+	} else {
+		return no - 1
+	}
+}
+
+func MenuPenjualTindakBarang(data d.ProductData, nData int, idxData int) int {
+	fmt.Println("-------------------------------------")
+	fmt.Println("+       Tindakan Pada Barang        +")
+	fmt.Println("-------------------------------------")
+	fmt.Printf("+ %-10s + %-10d + %10d +\n", data[idxData].Name, data[idxData].Price, data[idxData].Stock)
+	fmt.Println("-------------------------------------")
+	fmt.Println("1. Edit Data Barang")
+	fmt.Println("2. Hapus Data Barang")
+	fmt.Println("3. Kembali")
+	pilihan := PilihMenu(3)
+	return pilihan
+}
+
+func MenuPenjualTambahDanEditBarang() d.Product {
+	var name string
+	var price int
+	var stock int
+	fmt.Print("Masukkan Nama Barang: ")
+	fmt.Scanln(&name)
+	fmt.Print("Masukkan Harga Barang: ")
+	fmt.Scanln(&price)
+	fmt.Print("Masukkan Stok Barang: ")
+	fmt.Scanln(&stock)
+	return d.Product{
+		Name:  name,
+		Price: price,
+		Stock: stock,
+	}
+}
+
+func MenuPenjualLihatTransaksi(data d.TransactionData, nData int) int {
+	if nData == 0 {
+		fmt.Println("==============================")
+		fmt.Println("Belum ada transaksi yang tersedia")
+		fmt.Println("==============================")
+		return -1
+	}
+	fmt.Println("---------------------------------------------------")
+	fmt.Println("+             Lihat Transaksi Toko Ini            +")
+	fmt.Println("---------------------------------------------------")
+	fmt.Println("+ No  +  Nama Barang  +  Pembeli   +  Kuantitas   +")
+	fmt.Println("---------------------------------------------------")
+	for i := 0; i < nData; i++ {
+		fmt.Printf("+%4d +  %-10s + %-12s + %-12d +\n", i+1, data[i].ProductName, data[i].AccountName, data[i].Quantity)
+	}
+	fmt.Println("---------------------------------------------------")
+	fmt.Println("1. Urutkan Ascending Kuantitas")
+	fmt.Println("2. Urutkan Descending Kuantitas")
+	fmt.Println("3. Kembali")
+	pilihan := PilihMenu(3)
+	return pilihan
+}
