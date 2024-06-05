@@ -5,14 +5,14 @@ a.	Pemilik toko bisa melakukan registrasi akun.  👌
 b.	Pembeli bisa melakukan registrasi akun. 👌
 c.	Admin bisa melaukan persetujuan atau penolakan registrasi akun. 👌
 d.	Pemilik toko bisa menambahkan, mengubah, dan menghapus data barang yang dijual. 👌
-e.	Pembeli bisa melakukan pembelian barang.
+e.	Pembeli bisa melakukan pembelian barang. 👌
 f.	Pemilik toko bisa mencetak transaksi. 👌
 
 
 TODOS:
-1. Pembeli
-2. Benerin bug penjual
-3. Jangan lupa si searchingnya ada pake binary juga 1
+1. Pembeli 👌
+2. Benerin bug penjual 👌
+3. Jangan lupa si searchingnya ada pake binary juga 1 👌
 
 Bug Track:
 1. penjual saat dia lihat barang mau back -1 itu ga bisa [need to check]

@@ -128,3 +128,104 @@ func SortDescendingTxnByQuantity(data *m.TransactionData, nData int) {
 		data[j] = key
 	}
 }
+
+func GetStoreById(id int64) m.Store {
+	for i := 0; i < m.StoreDataArrLength; i++ {
+		if m.StoreDataArr[i].Id == id {
+			return m.StoreDataArr[i]
+		}
+	}
+	return m.Store{}
+}
+
+func GetAllItemData() (m.ProductWithStoreData, int) {
+	var tmp m.ProductWithStoreData
+	var i int
+	for i = 0; i < m.ProductDataArrLength; i++ {
+		store := GetStoreById(m.ProductDataArr[i].StoreId)
+		tmp[i] = m.ProductWithStore{
+			Product: m.ProductDataArr[i],
+			Store:   store,
+		}
+	}
+	return tmp, i
+}
+
+func SortAscendingItemByName(data *m.ProductWithStoreData, nData int) {
+	for i := 1; i < nData; i++ {
+		key := data[i]
+		j := i - 1
+		for j >= 0 && data[j].Product.Name > key.Product.Name {
+			data[j+1] = data[j]
+			j--
+		}
+		data[j+1] = key
+	}
+}
+
+func SortDescendingItemByName(data *m.ProductWithStoreData, nData int) {
+	for i := 0; i < nData-1; i++ {
+		bg := data[i]
+		bgIdx := i
+		for j := i + 1; j < nData; j++ {
+			if data[j].Product.Name > bg.Product.Name {
+				bg = data[j]
+				bgIdx = j
+			}
+		}
+		tmp := data[i]
+		data[i] = bg
+		data[bgIdx] = tmp
+	}
+}
+
+func CreateTxnData(buyer m.Account, data m.ProductWithStore, qnt int) {
+	var txn m.Transaction
+	id := uuid.New()
+	txn.Id = int64(id.ID())
+	txn.ProductId = data.Product.Id
+	txn.ProductName = data.Product.Name
+	txn.StoreId = data.Store.Id
+	txn.Quantity = qnt
+	txn.AccountId = buyer.Id
+	txn.AccountName = buyer.Username
+	m.TransactionDataArr[m.TransactionDataArrLength] = txn
+	m.TransactionDataArrLength += 1
+}
+
+// urutin data secara ascending
+func SortProductData() {
+	for i := 1; i < m.ProductDataArrLength; i++ {
+		key := m.ProductDataArr[i]
+		j := i - 1
+		for j >= 0 && m.ProductDataArr[j].Id > key.Id {
+			m.ProductDataArr[j+1] = m.ProductDataArr[j]
+			j--
+		}
+		m.ProductDataArr[j+1] = key
+	}
+}
+
+// ini pake binary search
+func UpdateItemStock(itemId int64, qnt int) {
+	SortProductData()
+	ki := 0
+	ka := m.ProductDataArrLength - 1
+	mi := (ki + ka) / 2
+	for ki <= ka {
+		if m.ProductDataArr[mi].Id > itemId {
+			ka = mi - 1
+		} else if m.ProductDataArr[mi].Id < itemId {
+			ki = mi + 1
+		} else {
+			m.ProductDataArr[mi].Stock -= qnt
+			break
+		}
+		mi = (ki + ka) / 2
+	}
+}
+
+func CheckoutItem(buyer m.Account, data m.ProductWithStore, qnt int) {
+	CreateTxnData(buyer, data, qnt)
+	UpdateItemStock(data.Product.Id, qnt)
+}

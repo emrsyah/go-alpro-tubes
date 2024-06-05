@@ -15,8 +15,10 @@ func seeding() {
 	// seeding data dummy
 	adminDefaultData := data.GetAdminData()
 	penjualSeedData := data.GetPenjualSeedData()
+	pembeliSeedData := data.GetPembeliSeedData()
 	data.AccountDataArr[0] = adminDefaultData
 	data.AccountDataArr[1] = penjualSeedData
+	data.AccountDataArr[2] = pembeliSeedData
 
 	storeSeedData := data.GetStoreSeedData()
 	data.StoreDataArr[0] = storeSeedData
@@ -60,7 +62,7 @@ func main() {
 						pilihan = 4
 					case 2:
 						// menu pembeli
-						mainPembeli()
+						mainPembeli(accData)
 						pilihan = 4
 					case 3:
 						// menu penjual
@@ -188,8 +190,35 @@ func mainPenjual(accData data.Account) {
 	}
 }
 
-func mainPembeli() {
-	fmt.Println("Ini menu pembeli")
+func mainPembeli(accData data.Account) {
+	allItemData, nItemData := store.GetAllItemData()
+	isOnLoop := true
+	for isOnLoop {
+		pilihan := menu.MenuMainPembeli(allItemData, nItemData)
+		switch pilihan {
+		case 1:
+			// Beli Barang
+			idxPilihanBarang := menu.MenuPembeliPilihBarang(allItemData, nItemData)
+			if idxPilihanBarang == -1 {
+				continue
+			} else {
+				quantityPembelian := menu.MenuPembeliCheckout(allItemData[idxPilihanBarang])
+				store.CheckoutItem(accData, allItemData[idxPilihanBarang], quantityPembelian)
+				fmt.Println("========================")
+				fmt.Println("Barang berhasil dibeli")
+				fmt.Println("========================")
+				allItemData, nItemData = store.GetAllItemData()
+			}
+		case 2:
+			// Urutkan Ascending Nama
+			store.SortAscendingItemByName(&allItemData, nItemData)
+		case 3:
+			// Urutkan Descending Nama
+			store.SortDescendingItemByName(&allItemData, nItemData)
+		case 4:
+			isOnLoop = false
+		}
+	}
 }
 
 func mainAdmin() {

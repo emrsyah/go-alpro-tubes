@@ -33,3 +33,8 @@ type Transaction struct {
 	ProductName string `json:"product_name"`
 	Quantity    int    `json:"quantity"`
 }
+
+type ProductWithStore struct {
+	Product
+	Store
+}

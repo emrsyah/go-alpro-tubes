@@ -6,6 +6,7 @@ type AccountData [NMAX]Account
 type StoreData [NMAX]Store
 type ProductData [NMAX]Product
 type TransactionData [NMAX]Transaction
+type ProductWithStoreData [NMAX]ProductWithStore
 
 var AccountDataArr AccountData
 var StoreDataArr StoreData
@@ -26,8 +27,21 @@ var seedPenjual = Account{
 	Role:       "PENJUAL",
 }
 
+var seedPembeli = Account{
+	Id:         12,
+	Username:   "p2",
+	Password:   "12345678",
+	IsAdmin:    true,
+	IsVerified: "accepted",
+	Role:       "PEMBELI",
+}
+
 func GetPenjualSeedData() Account {
 	return seedPenjual
+}
+
+func GetPembeliSeedData() Account {
+	return seedPembeli
 }
 
 var seedStore = Store{
