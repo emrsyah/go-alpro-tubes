@@ -131,7 +131,6 @@ func mainPenjual(accData data.Account) {
 			// di dalem menu bisa milih dan lakuin tindakan
 			indeksBarangDitindak := menu.MenuPenjualLihatBarang(itemData, nItem)
 			if indeksBarangDitindak == -1 {
-				isOnLoop = false
 				continue
 			}
 			nomorTindakan := menu.MenuPenjualTindakBarang(itemData, nItem, indeksBarangDitindak)

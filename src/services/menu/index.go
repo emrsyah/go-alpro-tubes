@@ -276,7 +276,7 @@ func MenuMainPembeli(data d.ProductWithStoreData, nData int) int {
 	fmt.Println("-----------------------------------------------------")
 	fmt.Println("1. Beli Barang")
 	fmt.Println("2. Urutkan Menaik Berdasar Nama")
-	fmt.Println("2. Urutkan Menurun Berdasar Nama")
+	fmt.Println("3. Urutkan Menurun Berdasar Nama")
 	fmt.Println("4. Kembali")
 	pilihan := PilihMenu(4)
 	return pilihan

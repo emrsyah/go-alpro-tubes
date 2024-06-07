@@ -1,11 +1,10 @@
 package models
 
 type Account struct {
-	Id       int64  `json:"id"`
-	Username string `json:"username"`
-	Password string `json:"password"`
-	IsAdmin  bool   `json:"is_admin"`
-	// IsVerified bisa pending, success, rejected
+	Id         int64  `json:"id"`
+	Username   string `json:"username"`
+	Password   string `json:"password"`
+	IsAdmin    bool   `json:"is_admin"`
 	IsVerified string `json:"is_verified"`
 	Role       string `json:"role"`
 }

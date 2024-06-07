@@ -1,8 +1,6 @@
 package services
 
 import (
-	"fmt"
-
 	data "github.com/emrsyah/go-alpro-tubes/src/data"
 )
 
@@ -30,5 +28,5 @@ func UpdateAccountData(id int64, status string) {
 			break
 		}
 	}
-	fmt.Println("Data Terbaru:", data.AccountDataArr)
+	// fmt.Println("Data Terbaru:", data.AccountDataArr)
 }
